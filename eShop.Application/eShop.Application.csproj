@@ -5,4 +5,13 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\eShop.Data\eShop.Data.csproj" />
+    <ProjectReference Include="..\eShop.ViewModel\eShop.ViewModel.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Catalog\Products\DTO\" />
+  </ItemGroup>
+
 </Project>

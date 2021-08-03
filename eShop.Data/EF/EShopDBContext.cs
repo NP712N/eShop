@@ -1,15 +1,27 @@
 ﻿using eShop.Data.Configurations;
 using eShop.Data.Entities;
+using eShop.Data.Extensions;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace eShop.Data.EF {
-    public class EShopDbContext : DbContext{
+    public class EShopDbContext : IdentityDbContext {
         public EShopDbContext(DbContextOptions options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
+            // Configuration models
+            ConfigData(modelBuilder);
+
+            // Seeding Data
+            modelBuilder.SeedData();
+
+            base.OnModelCreating(modelBuilder);
+        }
+
+        private void ConfigData(ModelBuilder modelBuilder) {
             modelBuilder.ApplyConfiguration(new CartConfiguration());
             modelBuilder.ApplyConfiguration(new AppConfigConfiguration());
             modelBuilder.ApplyConfiguration(new ProductConfiguration());
@@ -23,8 +35,6 @@ namespace eShop.Data.EF {
             modelBuilder.ApplyConfiguration(new ProductTranslationConfiguration());
             modelBuilder.ApplyConfiguration(new PromotionConfiguration());
             modelBuilder.ApplyConfiguration(new TransactionConfiguration());
-
-            base.OnModelCreating(modelBuilder);
         }
 
         public DbSet<Product> Products { get; set; }
